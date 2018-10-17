@@ -15,17 +15,12 @@ default: &default
   pool: 5
   username: root
   password:
-  socket: /var/run/mysqld/mysqld.sock
+  socket: /var/lib/mysql/mysql.sock
 
-# development:
-#   <<: *default
-#   database: landf_development
-development:    
-      adapter: mysql2
-      encoding: utf8
-      database: c9
-      username: <%= ENV['C9_USER'] %>
-      host: <%= ENV['IP'] %>
+development:
+  <<: *default
+  database: landf_development
+
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.

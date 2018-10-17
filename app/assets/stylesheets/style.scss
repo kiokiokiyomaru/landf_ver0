@@ -15,7 +15,7 @@
 
 @import url(http://fonts.googleapis.com/css?family=Unica+One);
 
-$accent: #57C3E9;
+$accent: #82e957;
 $black: #292929;
 $dark: #666;
 $darkGray: #999999;
@@ -87,7 +87,7 @@ a {
 }
 
 .btn {
-    @include basePadding(8px 20px);
+    @include basePadding(0px 20px);
     font-size: 14px;
     border: 2px solid $accent;
     color: $accent;
@@ -95,6 +95,7 @@ a {
     text-align: center;
     border-radius: 3px;
     display: inline-block;
+    margin-bottom: 4px;
   &:hover {
     border-color: lighten($accent, 15%);
     color: lighten($accent, 15%);
@@ -123,29 +124,36 @@ header.header {
   border-bottom: 1px solid $gray;
   background-color: #fff;
   position: fixed;
+  height: 150px;
   top: 0;
   left: 0;
   right: 0;
   z-index: 5;
+  height: 140px;
+  padding-bottom: 0px;
+  padding-right: 0px;
+      padding-left: 0px;
   div.header__bar.row {
     position: relative;
+    padding-right: 0px;
+    
     h1.grid-6 {
       font-size: 20px;
       line-height: 41px;
       float: left;
+      padding-left: 0px;
       a {
         display: block;
       }
     }
     div.grid-6 {
       float: right;
-      text-align: right;
+      text-align: left;
+      margin-top: 0px;
       a.post {
         @extend .btn;
-        // width: 120px;
-        width: 350px;
-        display: inline-left;
-        margin-left: 10px;
+        width: 250px;
+        margin-left: 0px;
       }
     }
   }
@@ -211,7 +219,25 @@ header.header {
     right: 0;
   }
 }
+
+
+    
+  div.contents.search{
+    height: 30px;
+    width: 300px;
+    margin-right: auto;
+    margin-left : auto;
+    margin-top: 100px;
+    margin-bottom: 0px ;
+    padding: 0px 50px;
+  }
+
+
+
 div.contents.row {
+    margin-top: 100px;  
+// img { width: 100vw; }
+
   h2 {
     @include boxBase(20px 0, 0);
     font-weight: normal;
@@ -224,10 +250,13 @@ div.contents.row {
   .new_user{
   font-family: "游ゴシック", "YuGothic";
   }
+  
+
   div.content_post {
-    @include boxBase(20px 0 ,30px);
+    @include boxBase(10px 0 ,30px);
     position: relative;
     height: 400px;
+    width: auto;
     color: #fff;
     background-size: cover;
     background-position: center center;
@@ -260,9 +289,9 @@ div.contents.row {
       ul.more_list {
         position: absolute;
         text-align: left;
-        width: 80px;
+        width: 220px;
         right: 0;
-        font-size: 12px;
+        font-size: 16px;
         background-color: #fff;
         border: 1px solid #ddd;
         display: none;
@@ -274,7 +303,7 @@ div.contents.row {
             border-bottom: 0;
           }
           a {
-            display: block;
+            // display: block;
             padding: 5px;
             &:hover {
               background-color: $accent;
@@ -317,7 +346,7 @@ div.contents.row {
     }
   }
   .success {
-    @include boxBase(20px 0 ,30px);
+    @include boxBase(100px 0 ,30px);
     box-shadow: 0 0 10px rgba($black,0.2);
     background-color: $white;
     box-sizing: border-box;
@@ -329,7 +358,7 @@ div.contents.row {
 }
 form {
   h3 {
-    @include baseMargin(0 0 20px);
+    @include baseMargin(10px 0px 10px);
     text-align: center;
     font-weight: normal;
     font-size: 20px;
@@ -355,7 +384,7 @@ form {
   }
 }
 .container {
-  @include boxBase(20px 0 ,30px);
+  @include boxBase(20px 0px ,30px);
   box-shadow: 0 0 10px rgba($black,0.2);
   background-color: $white;
   box-sizing: border-box;

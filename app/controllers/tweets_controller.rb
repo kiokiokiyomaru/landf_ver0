@@ -7,7 +7,7 @@ class TweetsController < ApplicationController
     # @tweets = Tweet.all.order("id DESC")
     # @tweets = Tweet.order("id DESC").page(params[:page]).per(5)
     # @tweets = Tweet.order("created_at DESC").page(params[:page]).per(5)  #5ページづつ昇順で表示 ※ハッシュのPageキーを利用
-    @tweets = Tweet.includes(:user).page(params[:page]).per(5).order("created_at DESC") #Kaminariのpageメソッドincludeメソッドで計算量を減らす 2nからnに
+    @tweets = Tweet.includes(:user).page(params[:page]).order("created_at DESC") #Kaminariのpageメソッドincludeメソッドで計算量を減らす 2nからnに
   end
   
   
@@ -18,9 +18,6 @@ class TweetsController < ApplicationController
   #   #   a= params[:text]
   #   # end
   # end
-  
-  
-  
   
 def select 
 # # text_ids = Tweet.where(text:params[:text]) .pluck(:id)
@@ -37,7 +34,7 @@ def select
 
        
   # weets_selected = Tweet.where(text:"params[:tekeywordncludes(:user).page(params[:page]).per(5).order("created_at DESC")
-  @tweets_selected = Tweet.where('text LIKE(?)', "%#{params[:keyword]}%").limit(20)
+  @tweets_selected = Tweet.where('text LIKE(?)', "%#{params[:keyword]}%").order("created_at DESC")
 #   @tweets = Tweet.where(text:"params[:text]")
 #   @tweets_selected = @tweets[1]
 end  
@@ -51,6 +48,7 @@ end
 
   def new
     #新規投稿画面の表示
+    @tweet = Tweet.new
   end     #モデルを利用した情報の表示などは行わないのでこれでOK
 
   # def create  #新規投稿データの保存
@@ -61,7 +59,10 @@ end
     # Tweet.create(tweet_params)  #モデルクラスTweetのcreatメソッドをハッシュparamsの戻り値を引数にして実行
     # Tweet.create(name: tweet_params[:name], image: tweet_params[:image], text: tweet_params[:text])
     # Tweet.create(name: tweet_params[:name], image: tweet_params[:image], text: tweet_params[:text], user_id: current_user.id) #paramsから持ってきたデータにuser_idを付け足し
-     Tweet.create(image: tweet_params[:image], text: tweet_params[:text], user_id: current_user.id) #クラス名.メソッド名(カラム1: 投稿情報1, カラム2:投稿新情報2。。。)
+    # Tweet.create(image: tweet_params[:image], text: tweet_params[:text], user_id: current_user.id) #クラス名.メソッド名(カラム1: 投稿情報1, カラム2:投稿新情報2。。。)
+    tweet = Tweet.new(image: params["tweet"]["image"], text: params["tweet"]["text"])
+    tweet.user_id = current_user.id
+    tweet.save
   end
 
   def destroy
@@ -69,9 +70,9 @@ end
     tweet.destroy if tweet.user_id == current_user.id  #変数tweetをActiveRecordメソッドdestroyで処理条件付きで
   end
   
-  def edit
-    @tweet = Tweet.find(params[:id])  #編集したいレコード(tweesテーブルのidのレコード)を@tweetに代入し、編集画面で利用できるように
-  end
+  # def edit
+  #   @tweet = Tweet.find(params[:id])  #編集したいレコード(tweesテーブルのidのレコード)を@tweetに代入し、編集画面で利用できるように
+  # end
   
   def update #edit画面でsent押下で行われるアクション
     # Tweet.update(image: tweet_params[:image], text: tweet_params[:text], user_id: current_user.id) 
@@ -94,7 +95,8 @@ end
  private    #プライベートメソッド：同じクラスの内部からのみ呼び出せる＝routesからは呼び出せない※ハッキング阻止の為、ストロングパラメーターにしている「permit」
   def tweet_params  
     # params.permit(:name, :image, :text,)  #指定した3つの要素に限り、ハッシュparamsに格納する
-    params.permit(:image, :text)
+    # params.permit(:image, :text)
+    params.permit(:tweet).permit(:image, :text)
   end
 
   def move_to_index          #非ログインユーザーの
